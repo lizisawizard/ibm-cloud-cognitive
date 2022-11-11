@@ -145,6 +145,7 @@ export const DatagridContent = ({ datagridState }) => {
       >
         <DatagridToolbar {...datagridState} />
         <div className={`${blockClass}__table-container`} ref={gridAreaRef}>
+          {/* FILTERPANEL GOES HERE */}
           {leftPanel && leftPanel.isOpen && (
             <div className={`${blockClass}__datagridLeftPanel`}>
               {leftPanel.panelContent}
