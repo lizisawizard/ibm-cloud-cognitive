@@ -673,156 +673,22 @@ export const LeftPanel = () => {
     },
   ];
 
-  const FilterPanelDatagridActions = (datagridState) => {
-    const {
-      selectedFlatRows,
-      setGlobalFilter,
-      useDenseHeader,
-      RowSizeDropdown,
-      rowSizeDropdownProps,
-      filterLeftPanelOpen,
-      setFilterLeftPanelOpen,
-    } = datagridState;
-
-    const { TableToolbarContent, TableToolbarSearch } = DataTable;
-    const downloadCsv = () => {
-      alert('Downloading...');
-    }; 
-    const refreshColumns = () => {
-      alert('refreshing...');
-    };
-    const leftPanelClick = () => {
-      alert('open/close left panel...');
-    };
-    const searchForAColumn = 'Search';
-    const isNothingSelected = selectedFlatRows.length === 0;
-    const style = {
-      'button:nth-child(1) > span:nth-child(1)': {
-        bottom: '-37px',
-      },
-    };
-
-    /** Methods */
-    const openPanel = () => setFilterLeftPanelOpen(true);
-    const closePanel = () => setFilterLeftPanelOpen(false);
-
-    return (
-        isNothingSelected &&
-        (useDenseHeader && useDenseHeader ? (
-          <TableToolbarContent size="sm">
-            <div style={style}>
-              <Button
-                kind="ghost"
-                hasIconOnly
-                tooltipPosition="bottom"
-                renderIcon={Download16}
-                iconDescription={'Download CSV'}
-                onClick={downloadCsv}
-              />
-            </div>
-            <div style={style}>
-              <Button
-                kind="ghost"
-                hasIconOnly
-                tooltipPosition="bottom"
-                renderIcon={Filter16}
-                iconDescription={'Left panel'}
-                onClick={leftPanelClick}
-              />
-            </div>
-            {/* {renderFilterLeftPanel()} */}
-            <Button
-              kind="ghost"
-              hasIconOnly
-              tooltipPosition="bottom"
-              renderIcon={Filter16}
-              iconDescription={'Open filters'}
-              onClick={filterLeftPanelOpen ? closePanel : openPanel}
-              // className={cx(`${componentClass}__trigger`, {
-              // [`${componentClass}__trigger--open`]: open,
-              // })}
-            />
-            <RowSizeDropdown {...rowSizeDropdownProps} />
-            <div style={style} className={`${blockClass}__toolbar-divider`}>
-              <Button kind="ghost" renderIcon={Add16} iconDescription={'Action'}>
-                Ghost button
-              </Button>
-            </div>
-          </TableToolbarContent>
-        ) : (
-          <TableToolbarContent>
-            <Button
-              kind="ghost"
-              hasIconOnly
-              tooltipPosition="bottom"
-              renderIcon={Filter16}
-              iconDescription={'Open filters'}
-              onClick={open ? closePanel : openPanel}
-              // className={cx(`${componentClass}__trigger`, {
-              // [`${componentClass}__trigger--open`]: open,
-              // })}
-            />
-            <TableToolbarSearch
-              size="xl"
-              id="columnSearch"
-              persistent
-              placeHolderText={searchForAColumn}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-            />
-            <RowSizeDropdown {...rowSizeDropdownProps} />
-            <div style={style}>
-              <Button
-                kind="ghost"
-                hasIconOnly
-                tooltipPosition="bottom"
-                renderIcon={Restart16}
-                iconDescription={'Refresh'}
-                onClick={refreshColumns}
-              />
-            </div>
-            <div style={style}>
-              <Button
-                kind="ghost"
-                hasIconOnly
-                tooltipPosition="bottom"
-                renderIcon={Download16}
-                iconDescription={'Download CSV'}
-                onClick={downloadCsv}
-              />
-            </div>
-            <ButtonMenu label="Primary button" renderIcon={Add16}>
-              <ButtonMenuItem
-                itemText="Option 1"
-                onClick={action(`Click on ButtonMenu Option 1`)}
-              />
-              <ButtonMenuItem
-                itemText="Option 2"
-                onClick={action(`Click on ButtonMenu Option 2`)}
-              />
-              <ButtonMenuItem
-                itemText="Option 3"
-                onClick={action(`Click on ButtonMenu Option 3`)}
-              />
-            </ButtonMenu>
-          </TableToolbarContent>
-        ))
-    );
-  }
 
   const datagridState = useDatagrid({
-    leftPanel: {
-      panelContent: (
-        <FilterLeftPanel
-          header="Filter"
-          filterSections={sections}
-          updateMethod="batch"
-          open={true}
-        />
-      ),
+    filterProps: {
+      variation: 'panel',
+      updateMethod: 'batch',
+      primaryActionLabel: 'Apply',
+      secondaryActionLabel: 'Cancel',
+      flyoutIconDescription: 'Open filters',
+      shouldClickOutsideToClose: false,
+      onFlyoutOpen: () => console.log('onFlyoutOpen'),
+      onFlyoutClose: () => console.log('onFlyoutClose'),
+      sections,
     },
     columns,
     data,
-    DatagridActions: FilterPanelDatagridActions,
+    DatagridActions,
     batchActions: true,
     toolbarBatchActions: getBatchActions(),
   });

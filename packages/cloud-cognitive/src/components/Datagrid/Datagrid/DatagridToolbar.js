@@ -161,12 +161,12 @@ const DatagridToolbar = (datagridState) => {
   const { width, ref } = useResizeDetector();
   const { DatagridActions, DatagridBatchActions, batchActions } = datagridState;
 
-  // const datagridStateWithFilterProps = {
-  //   ...datagridState,
-  //   applyFilters,
-  //   filterLeftPanelOpen,
-  //   setFilterLeftPanelOpen,
-  // };
+  const datagridStateWithFilterProps = {
+    ...datagridState,
+    // applyFilters,
+    filterLeftPanelOpen,
+    setFilterLeftPanelOpen,
+  };
 
   return batchActions && DatagridActions ? (
     <div ref={ref} className={`${blockClass}__table-toolbar`}>

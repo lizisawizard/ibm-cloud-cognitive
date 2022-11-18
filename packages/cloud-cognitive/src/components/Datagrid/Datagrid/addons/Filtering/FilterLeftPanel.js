@@ -6,15 +6,15 @@ import {
   AccordionItem,
 } from 'carbon-components-react';
 import { pkg } from '../../../../../settings';
-import { Filter16 } from '@carbon/icons-react';
 import { BATCH, INSTANT } from './constants';
 import cx from 'classnames';
-import { Search } from 'carbon-components-react';
+import { Close32 } from '@carbon/icons-react';
+import { Search, Button } from 'carbon-components-react';
 
 const blockClass = `${pkg.prefix}--datagrid`;
-const componentClass = `${blockClass}-filter-panel`;
+const componentClass = `${blockClass}-filterLeftPanel`;
 
-const FilterLeftPanel = ({ title, updateMethod = BATCH, filterSections, open }) => {
+const FilterLeftPanel = ({ title, updateMethod = BATCH, filterSections, open}) => {
   /** Refs */
   const filterLeftPanelRef = useRef(null);
 
@@ -63,7 +63,10 @@ const FilterLeftPanel = ({ title, updateMethod = BATCH, filterSections, open }) 
           [`${componentClass}--instant`]: !showActionSet,
         })}
       >
-        <h1>{title}</h1>
+        <div className={`${componentClass}__titleAndClose`}>
+          <h1 className={`${componentClass}__title`}>{title}</h1>
+          <Button hasIconOnly renderIcon={Close32} iconDescription='button-chan' kind='ghost'/>
+        </div>
         <Search
           labelText="Filter search"
           placeHolderText="Find filters"
@@ -93,7 +96,7 @@ const FilterLeftPanel = ({ title, updateMethod = BATCH, filterSections, open }) 
             );
           })}
         </div>
-        {renderActionSet()}
+        {/* {renderActionSet()} */}
       </div>
     </div>
   );
@@ -107,15 +110,3 @@ FilterLeftPanel.propTypes = {
 };
 
 export default FilterLeftPanel;
-
-{/* <Button
-    kind="ghost"
-    hasIconOnly
-    tooltipPosition="bottom"
-    renderIcon={Filter16}
-    iconDescription={'Open filters'}
-    onClick={open ? closePanel : openPanel}
-    className={cx(`${componentClass}__trigger`, {
-    [`${componentClass}__trigger--open`]: open,
-    })}
-/> */}
